@@ -16,6 +16,8 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final String IDATA_SCAN_ACTION = "android.intent.action.SCANRESULT";
     private static final String YBX_SCAN_ACTION = "android.intent.ACTION_DECODE_DATA";
     private static final String BARCODE_DATA_ACTION = "com.ehsy.warehouse.action.BARCODE_DATA";
+    private static final String ZEBRA_SCAN_ACTION = "com.motorolasolutions.emdk.datawedge.api.ACTION_SOFTSCANTRIGGER";
+    
 
     private static EventChannel.EventSink eventSink;
 
@@ -30,6 +32,8 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 eventSink.success(intent.getStringExtra("barcode"));
             } else if (BARCODE_DATA_ACTION.equals(intent.getAction())) {
                 eventSink.success(intent.getStringExtra("data"));
+            } else if (ZEBRA_SCAN_ACTION.equals(intent.getAction())) {
+                eventSink.success(intent.getStringExtra("com.motorolasolutions.emdk.datawedge.data_string"));
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
             }
@@ -56,6 +60,11 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         honeyIntentFilter.addAction(BARCODE_DATA_ACTION);
         honeyIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, honeyIntentFilter);
+        
+        IntentFilter zebraIntentFilter = new IntentFilter();
+        honeyIntentFilter.addAction(ZEBRA_SCAN_ACTION);
+        honeyIntentFilter.setPriority(Integer.MAX_VALUE);
+        activity.registerReceiver(scanReceiver, zebraIntentFilter);
     }
 
     public static void registerWith(PluginRegistry.Registrar registrar) {

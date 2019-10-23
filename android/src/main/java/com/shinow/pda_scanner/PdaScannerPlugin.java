@@ -24,15 +24,15 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final BroadcastReceiver scanReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (XM_SCAN_ACTION.equals(intent.getAction())) {
+            if (intent.getAction().contentEquals(XM_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("scannerdata"));
-            } else if (IDATA_SCAN_ACTION.equals(intent.getAction())) {
+            } else if (intent.getAction().contentEquals(IDATA_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("value"));
-            } else if (YBX_SCAN_ACTION.equals(intent.getAction())) {
+            } else if (intent.getAction().contentEquals(YBX_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("barcode"));
-            } else if (BARCODE_DATA_ACTION.equals(intent.getAction())) {
+            } else if (intent.getAction().contentEquals(BARCODE_DATA_ACTION)) {
                 eventSink.success(intent.getStringExtra("data"));
-            } else if (ZEBRA_SCAN_ACTION.equals(intent.getAction())) {
+            } else if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("com.motorolasolutions.emdk.datawedge.data_string"));
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
@@ -71,6 +71,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         EventChannel channel = new EventChannel(registrar.messenger(), CHANNEL);
         PdaScannerPlugin plugin = new PdaScannerPlugin(registrar.activity());
         channel.setStreamHandler(plugin);
+        Log.i("PdaScannerPlugin", "PdaScannerPlugin:registerWith");
     }
 
     @Override

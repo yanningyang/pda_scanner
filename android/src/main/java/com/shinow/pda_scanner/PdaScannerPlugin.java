@@ -16,7 +16,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final String IDATA_SCAN_ACTION = "android.intent.action.SCANRESULT";
     private static final String YBX_SCAN_ACTION = "android.intent.ACTION_DECODE_DATA";
     private static final String BARCODE_DATA_ACTION = "com.ehsy.warehouse.action.BARCODE_DATA";
-    private static final String ZEBRA_SCAN_ACTION = "com.motorolasolutions.emdk.datawedge.api.ACTION_SOFTSCANTRIGGER";
+    private static final String ZEBRA_SCAN_ACTION = "com.motorolasolutions.emdk.sample.dwdemosample.RECVR";
     
 
     private static EventChannel.EventSink eventSink;

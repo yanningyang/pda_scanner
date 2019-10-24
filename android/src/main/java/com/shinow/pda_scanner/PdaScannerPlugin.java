@@ -40,7 +40,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
 //                     eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
-                    Log.i("PdaScannerPlugin", status);
+                    Log.i("PdaScannerPlugin" + status, "");
                 } else {
                     boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                             status == BatteryManager.BATTERY_STATUS_FULL;

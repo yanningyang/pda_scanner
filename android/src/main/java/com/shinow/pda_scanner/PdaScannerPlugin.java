@@ -38,14 +38,14 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 eventSink.success(intent.getStringExtra("data"));
                 Log.i("PdaScannerPlugin", intent.getAction());
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
-//                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-//                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-//                     eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
-//                 } else {
-//                     boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-//                             status == BatteryManager.BATTERY_STATUS_FULL;
-//                     eventSink.success(isCharging ? "charging" : "discharging");
-//                 }
+                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
+                    eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
+                } else {
+                    boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                            status == BatteryManager.BATTERY_STATUS_FULL;
+                    eventSink.success(isCharging ? "charging" : "discharging");
+                }
                 Log.i("PdaScannerPlugin", intent.getAction());
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
@@ -81,7 +81,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 
         IntentFilter batteryIntentFilter = new IntentFilter();
         batteryIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        batteryIntentFilter.setPriority(Integer.MAX_VALUE);
+//         batteryIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, batteryIntentFilter);
     }
 

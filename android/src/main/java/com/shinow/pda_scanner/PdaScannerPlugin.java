@@ -1,6 +1,8 @@
 package com.shinow.pda_scanner;
 
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,11 +40,11 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-                    events.error("UNAVAILABLE", "Charging status unavailable", null);
+                    eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
                 } else {
                     boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                             status == BatteryManager.BATTERY_STATUS_FULL;
-                    events.success(isCharging ? "charging" : "discharging");
+                    eventSink.success(isCharging ? "charging" : "discharging");
                 }
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");

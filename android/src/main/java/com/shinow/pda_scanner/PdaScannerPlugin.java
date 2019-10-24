@@ -23,15 +23,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i("PdaScannerPlugin", intent.getAction());
-            if (intent.getAction().contentEquals(XM_SCAN_ACTION)) {
-                eventSink.success(intent.getStringExtra("scannerdata"));
-            } else if (intent.getAction().contentEquals(IDATA_SCAN_ACTION)) {
-                eventSink.success(intent.getStringExtra("value"));
-            } else if (intent.getAction().contentEquals(YBX_SCAN_ACTION)) {
-                eventSink.success(intent.getStringExtra("barcode"));
-            } else if (intent.getAction().contentEquals(BARCODE_DATA_ACTION)) {
-                eventSink.success(intent.getStringExtra("data"));
-            } else if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
+            if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("data"));
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);

@@ -14,10 +14,6 @@ import io.flutter.plugin.common.PluginRegistry;
 
 public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final String CHANNEL = "com.shinow.pda_scanner/plugin";
-    private static final String XM_SCAN_ACTION = "com.android.server.scannerservice.broadcast";
-    private static final String IDATA_SCAN_ACTION = "android.intent.action.SCANRESULT";
-    private static final String YBX_SCAN_ACTION = "android.intent.ACTION_DECODE_DATA";
-    private static final String BARCODE_DATA_ACTION = "com.ehsy.warehouse.action.BARCODE_DATA";
     private static final String ZEBRA_SCAN_ACTION = "com.symbol.scanconfig.SCANDEMO";
     
 
@@ -47,6 +43,8 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
 //                             status == BatteryManager.BATTERY_STATUS_FULL;
 //                     eventSink.success(isCharging ? "charging" : "discharging");
 //                 }
+            } else if (intent.getAction().contentEquals(Intent.ACTION_TIME_TICK)) {
+                eventSink.success("time");
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
             }
@@ -54,26 +52,6 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     };
 
     private PdaScannerPlugin(Activity activity) {
-        IntentFilter xmIntentFilter = new IntentFilter();
-        xmIntentFilter.addAction(XM_SCAN_ACTION);
-        xmIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, xmIntentFilter);
-
-        IntentFilter iDataIntentFilter = new IntentFilter();
-        iDataIntentFilter.addAction(IDATA_SCAN_ACTION);
-        iDataIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, iDataIntentFilter);
-
-        IntentFilter yBoXunIntentFilter = new IntentFilter();
-        yBoXunIntentFilter.addAction(IDATA_SCAN_ACTION);
-        yBoXunIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, yBoXunIntentFilter);
-
-        IntentFilter honeyIntentFilter = new IntentFilter();
-        honeyIntentFilter.addAction(BARCODE_DATA_ACTION);
-        honeyIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, honeyIntentFilter);
-        
         IntentFilter zebraIntentFilter = new IntentFilter();
         zebraIntentFilter.addAction(ZEBRA_SCAN_ACTION);
         zebraIntentFilter.setPriority(Integer.MAX_VALUE);
@@ -83,6 +61,11 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         batteryIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         batteryIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, batteryIntentFilter);
+                        
+        IntentFilter timeIntentFilter = new IntentFilter();
+        timeIntentFilter.addAction(Intent.ACTION_TIME_TICK);
+        timeIntentFilter.setPriority(Integer.MAX_VALUE);
+        activity.registerReceiver(scanReceiver, timeIntentFilter);
     }
 
     public static void registerWith(PluginRegistry.Registrar registrar) {

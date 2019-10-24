@@ -14,7 +14,7 @@ import io.flutter.plugin.common.PluginRegistry;
 
 public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final String CHANNEL = "com.shinow.pda_scanner/plugin";
-    private static final String ZEBRA_SCAN_ACTION = "com.symbol.scanconfig.SCANDEMO";
+    private static final String ZEBRA_SCAN_ACTION = "com.jac.mc36.SCANNER";
     
 
     private static EventChannel.EventSink eventSink;

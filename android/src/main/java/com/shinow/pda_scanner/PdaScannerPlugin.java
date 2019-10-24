@@ -37,14 +37,15 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
             } else if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("data"));
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
-//                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-//                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
+                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
 //                     eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
-//                 } else {
-//                     boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-//                             status == BatteryManager.BATTERY_STATUS_FULL;
-//                     eventSink.success(isCharging ? "charging" : "discharging");
-//                 }
+                    Log.i("PdaScannerPlugin", status);
+                } else {
+                    boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                            status == BatteryManager.BATTERY_STATUS_FULL;
+                    eventSink.success(isCharging ? "charging" : "discharging");
+                }
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
             }

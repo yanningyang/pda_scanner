@@ -26,6 +26,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final BroadcastReceiver scanReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.i("PdaScannerPlugin", intent.getAction());
             if (intent.getAction().contentEquals(XM_SCAN_ACTION)) {
                 eventSink.success(intent.getStringExtra("scannerdata"));
             } else if (intent.getAction().contentEquals(IDATA_SCAN_ACTION)) {
@@ -38,6 +39,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 eventSink.success(intent.getStringExtra("data"));
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                Log.i(intent.getAction(), "" + status);
 //                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
 //                     eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
 //                 } else {
@@ -48,7 +50,6 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
             }
-            Log.i("PdaScannerPlugin", intent.getAction());
         }
     };
 

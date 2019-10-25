@@ -17,7 +17,8 @@ import io.flutter.plugin.common.PluginRegistry;
 
 public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final String CHANNEL = "com.shinow.pda_scanner/plugin";
-    private static final String ZEBRA_SCAN_ACTION = "com.jac.mc36.SCANNER";
+    private static final String ZEBRA_SCAN_ACTION = "com.symbol.scanconfig.SCANDEMO";
+    private static final String ZEBRA_SCAN_CATEGORY = "com.symbol.category.DEFAULT";
     
 
     private static EventChannel.EventSink eventSink;
@@ -26,11 +27,6 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
-//                 Bundle extras = intent.getExtras();
-//                 Set<String> strings = extras.keySet();
-//                 for (String string:strings) {
-//                     Log.i("intent extras ::", string);
-//                 }
                 eventSink.success(intent.getStringExtra("com.symbol.scanconfig.decode_data"));
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
@@ -41,7 +37,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private PdaScannerPlugin(Activity activity) {
         IntentFilter zebraIntentFilter = new IntentFilter();
         zebraIntentFilter.addAction(ZEBRA_SCAN_ACTION);
-        zebraIntentFilter.addCategory("com.jac.category.DEFAULT");
+        zebraIntentFilter.addCategory(ZEBRA_SCAN_CATEGORY);
         zebraIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, zebraIntentFilter);
     }

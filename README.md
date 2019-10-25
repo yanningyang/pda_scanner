@@ -14,16 +14,15 @@ A Flutter plugin 🛠 to scanning. Ready for PDA 🚀
 Add this to your package's pubspec.yaml file:
 
 ```
-dependencies:
- pda_scanner: ^0.2.2
+pda_scanner:
+  git: 
+    url: https://github.com/yanningyang/pda_scanner.git
+    ref: master
 ```
 
 ## Supported
 
--  [x] SEUIC(小码哥)-PDA
--  [x] IData(盈达聚力)-PDA
--  [x] UROVO(优博讯)-PDA
--  [x] HONEYWELL(霍尼韦尔) PDA
+-  [x] ZEBRA(MC36)
 
 ## Usage
 ```dart

@@ -25,26 +25,13 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private static final BroadcastReceiver scanReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("PdaScannerPlugin", intent.getAction());
             if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
-                Bundle extras = intent.getExtras();
-                Set<String> strings = extras.keySet();
-                for (String string:strings) {
-                    Log.i("intent extras ::", string);
-                }
-                eventSink.success(intent.getStringExtra("data"));
-            } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {
-                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-                Log.i(intent.getAction(), "" + status);
-//                 if (status == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-//                     eventSink.error("UNAVAILABLE", "Charging status unavailable", null);
-//                 } else {
-//                     boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-//                             status == BatteryManager.BATTERY_STATUS_FULL;
-//                     eventSink.success(isCharging ? "charging" : "discharging");
+//                 Bundle extras = intent.getExtras();
+//                 Set<String> strings = extras.keySet();
+//                 for (String string:strings) {
+//                     Log.i("intent extras ::", string);
 //                 }
-            } else if (intent.getAction().contentEquals(Intent.ACTION_TIME_TICK)) {
-                eventSink.success("time");
+                eventSink.success(intent.getStringExtra("com.symbol.scanconfig.decode_data"));
             } else {
                 Log.i("PdaScannerPlugin", "NoSuchAction");
             }
@@ -57,16 +44,6 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         zebraIntentFilter.addCategory("com.jac.category.DEFAULT");
         zebraIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, zebraIntentFilter);
-                
-        IntentFilter batteryIntentFilter = new IntentFilter();
-        batteryIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        batteryIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, batteryIntentFilter);
-                        
-        IntentFilter timeIntentFilter = new IntentFilter();
-        timeIntentFilter.addAction(Intent.ACTION_TIME_TICK);
-        timeIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, timeIntentFilter);
     }
 
     public static void registerWith(PluginRegistry.Registrar registrar) {

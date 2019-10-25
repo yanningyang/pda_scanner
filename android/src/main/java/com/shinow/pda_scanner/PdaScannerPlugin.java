@@ -26,8 +26,8 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
             if (intent.getAction().contentEquals(ZEBRA_SCAN_ACTION)) {
                 Bundle extras = intent.getExtras();
                 Set strings = extras.keySet();
-                for ( String string:strings) {
-                    Log.i(“intent extras ::”+ string);
+                for (String string:strings) {
+                    Log.i("intent extras ::"+ string);
                 }
                 eventSink.success(intent.getStringExtra("data"));
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {

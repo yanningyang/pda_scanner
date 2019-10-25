@@ -30,7 +30,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
                 Bundle extras = intent.getExtras();
                 Set<String> strings = extras.keySet();
                 for (String string:strings) {
-                    Log.i("intent extras ::"+ string);
+                    Log.i("intent extras ::", string);
                 }
                 eventSink.success(intent.getStringExtra("data"));
             } else if (intent.getAction().contentEquals(Intent.ACTION_BATTERY_CHANGED)) {

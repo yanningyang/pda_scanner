@@ -46,6 +46,7 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
     private PdaScannerPlugin(Activity activity) {
         IntentFilter zebraIntentFilter = new IntentFilter();
         zebraIntentFilter.addAction(ZEBRA_SCAN_ACTION);
+        zebraIntentFilter.addCategory("com.jac.category.DEFAULT");
         zebraIntentFilter.setPriority(Integer.MAX_VALUE);
         activity.registerReceiver(scanReceiver, zebraIntentFilter);
                 

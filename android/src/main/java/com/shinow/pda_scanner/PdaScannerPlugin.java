@@ -34,17 +34,17 @@ public class PdaScannerPlugin implements EventChannel.StreamHandler {
         }
     };
 
-    private PdaScannerPlugin(Activity activity) {
+    private PdaScannerPlugin(Context context) {
         IntentFilter zebraIntentFilter = new IntentFilter();
         zebraIntentFilter.addAction(ZEBRA_SCAN_ACTION);
         zebraIntentFilter.addCategory(ZEBRA_SCAN_CATEGORY);
         zebraIntentFilter.setPriority(Integer.MAX_VALUE);
-        activity.registerReceiver(scanReceiver, zebraIntentFilter);
+        context.registerReceiver(scanReceiver, zebraIntentFilter);
     }
 
     public static void registerWith(PluginRegistry.Registrar registrar) {
         EventChannel channel = new EventChannel(registrar.messenger(), CHANNEL);
-        PdaScannerPlugin plugin = new PdaScannerPlugin(registrar.activity());
+        PdaScannerPlugin plugin = new PdaScannerPlugin(registrar.context());
         channel.setStreamHandler(plugin);
         Log.i("PdaScannerPlugin", "PdaScannerPlugin:registerWith");
     }
